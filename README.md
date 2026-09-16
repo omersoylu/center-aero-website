@@ -40,3 +40,7 @@ npm run deploy
 Betik sırasıyla derler, `out/` klasörünü FTPS ile `/centeraero.com` dizinine yükler (eski `_next` klasörünü temizleyerek) ve canlı sayfadaki derleme damgasını yerel derlemeyle karşılaştırır.
 
 Seçenekler: `npm run deploy -- --dry-run` (yüklemeden listele), `npm run deploy -- --skip-build` (mevcut `out/` klasörünü yükle). Sunucu FTPS kabul etmezse `.env.deploy` içinde `FTP_SECURE=false`.
+
+### GitHub'a push ile otomatik yayın
+
+`.github/workflows/deploy-natro.yml`, `main` dalına her push'ta siteyi derleyip Natro'ya FTPS ile yükler. Çalışması için GitHub'da **Settings → Secrets and variables → Actions → New repository secret** ile üç değer eklenmeli: `FTP_HOST`, `FTP_USER`, `FTP_PASSWORD` (Natro → FTP Bilgisi). Secret'lar girilene kadar iş "atlandı" mesajıyla geçer, hata vermez.
