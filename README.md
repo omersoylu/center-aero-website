@@ -22,15 +22,17 @@ npm run start      # üretim sunucusu
 - `src/app/globals.css` — marka renkleri (grafit `#1F2A37`, zümrüt `#10B981`), yardımcı sınıflar, animasyon keyframe'leri
 - `public/` — logo SVG'leri ve favicon
 
-## Yayına almadan önce
-
-1. **İletişim formu** (`src/components/contact.tsx`): şu an yalnızca istemci tarafında onay gösterir. Bir e-posta servisi veya API ucuna bağlanmalı (ör. Resend, Formspree, kendi API route'unuz).
-2. `src/app/layout.tsx` içindeki `metadata` alanına alan adı (`metadataBase`) ve Open Graph görseli ekleyin.
-3. Sosyal medya ve e-posta bağlantıları eklenecekse `footer.tsx` ve `contact.tsx` içinde yer ayrıldı.
-4. Vercel'e bağlanıp `main` dalını dağıtmak yeterlidir; ek yapılandırma gerekmez.
-
 ## Yayın
 
-- Kaynak: https://github.com/omersoylu/center-aero-website (dal: `main`)
-- Barındırma: GitHub Pages, statik dışa aktarma (`output: "export"`). `main` dalına her push, `.github/workflows/deploy.yml` ile otomatik yayınlanır.
-- Alan adı: `public/CNAME` → `www.centeraero.com`. DNS'te `www` için CNAME `omersoylu.github.io`, kök alan adı için A kayıtları 185.199.108.153 / 185.199.109.153 / 185.199.110.153 / 185.199.111.153. DNS yayıldıktan sonra GitHub → Settings → Pages'te "Enforce HTTPS" açılmalı.
+- Kaynak kod: https://github.com/omersoylu/center-aero-website (dal: `main`)
+- Barındırma: **Natro** (Sınırsız Pro Hosting, Plesk; alan adı `centeraero.com` ek alan adı olarak `trionaero.com` paketinde). SSL: Sectigo, `centeraero.com` + `www` için geçerli.
+- DNS: Natro paneli → Hosting Yönetimi → Web Sitesi → DNS Yönetimi. `centeraero.com` A → 89.19.30.91, `www` CNAME → centeraero.com. MX/SPF/DKIM kayıtları e‑posta (kurumsaleposta.com) için, dokunmayın.
+
+### Yeniden yayınlama
+
+```bash
+npm run build                       # statik çıktı: out/
+cd out && zip -r ../site.zip . && cd ..
+```
+
+Plesk → Dosyalar → `centeraero.com` klasörü → `site.zip` yükle → Arşiv → Dosyaları Çıkartın (“Varolan dosyaları değiştirin” işaretli) → zip'i sil.
