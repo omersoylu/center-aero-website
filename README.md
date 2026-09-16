@@ -28,3 +28,9 @@ npm run start      # üretim sunucusu
 2. `src/app/layout.tsx` içindeki `metadata` alanına alan adı (`metadataBase`) ve Open Graph görseli ekleyin.
 3. Sosyal medya ve e-posta bağlantıları eklenecekse `footer.tsx` ve `contact.tsx` içinde yer ayrıldı.
 4. Vercel'e bağlanıp `main` dalını dağıtmak yeterlidir; ek yapılandırma gerekmez.
+
+## Yayın
+
+- Kaynak: https://github.com/omersoylu/center-aero-website (dal: `main`)
+- Barındırma: GitHub Pages, statik dışa aktarma (`output: "export"`). `main` dalına her push, `.github/workflows/deploy.yml` ile otomatik yayınlanır.
+- Alan adı: `public/CNAME` → `www.centeraero.com`. DNS'te `www` için CNAME `omersoylu.github.io`, kök alan adı için A kayıtları 185.199.108.153 / 185.199.109.153 / 185.199.110.153 / 185.199.111.153. DNS yayıldıktan sonra GitHub → Settings → Pages'te "Enforce HTTPS" açılmalı.
