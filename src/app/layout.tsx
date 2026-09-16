@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   description:
     "Center Aero lists the live stock of aviation suppliers and matches every request with the right part and the right end user in seconds. Rotables, engine, chemicals, expendables and ground equipment for commercial, rotary and business aviation.",
   icons: { icon: "/favicon.svg" },
+  other: { "build-time": process.env.NEXT_PUBLIC_BUILD_TIME ?? "" },
   openGraph: {
     title: "Center Aero — The center of aviation supply",
     description: "Automated quoting, procurement, buying and selling for aviation spare parts. One center for every product group and platform.",

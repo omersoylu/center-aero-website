@@ -28,11 +28,15 @@ npm run start      # üretim sunucusu
 - Barındırma: **Natro** (Sınırsız Pro Hosting, Plesk; alan adı `centeraero.com` ek alan adı olarak `trionaero.com` paketinde). SSL: Sectigo, `centeraero.com` + `www` için geçerli.
 - DNS: Natro paneli → Hosting Yönetimi → Web Sitesi → DNS Yönetimi. `centeraero.com` A → 89.19.30.91, `www` CNAME → centeraero.com. MX/SPF/DKIM kayıtları e‑posta (kurumsaleposta.com) için, dokunmayın.
 
-### Yeniden yayınlama
+### Yeniden yayınlama (tek komut)
+
+1. İlk kurulum: `.env.deploy.example` dosyasını `.env.deploy` adıyla kopyalayın ve Natro FTP bilgilerini girin (Natro paneli → Hosting Yönetimi → Web Sitesi (centeraero.com) → FTP Bilgisi). Bu dosya git'e girmez.
+2. Yayınlamak için:
 
 ```bash
-npm run build                       # statik çıktı: out/
-cd out && zip -r ../site.zip . && cd ..
+npm run deploy
 ```
 
-Plesk → Dosyalar → `centeraero.com` klasörü → `site.zip` yükle → Arşiv → Dosyaları Çıkartın (“Varolan dosyaları değiştirin” işaretli) → zip'i sil.
+Betik sırasıyla derler, `out/` klasörünü FTPS ile `/centeraero.com` dizinine yükler (eski `_next` klasörünü temizleyerek) ve canlı sayfadaki derleme damgasını yerel derlemeyle karşılaştırır.
+
+Seçenekler: `npm run deploy -- --dry-run` (yüklemeden listele), `npm run deploy -- --skip-build` (mevcut `out/` klasörünü yükle). Sunucu FTPS kabul etmezse `.env.deploy` içinde `FTP_SECURE=false`.
