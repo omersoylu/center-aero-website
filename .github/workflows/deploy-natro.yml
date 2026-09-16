@@ -45,7 +45,9 @@ jobs:
           protocol: ftps
           security: loose
           local-dir: ./out/
-          server-dir: /centeraero.com/
+          # u2862044 centeraero.com'a özel FTP hesabı: kökü doğrudan site klasörü.
+          # Ana hesap (u2851938) kullanılırsa /centeraero.com/ yapın.
+          server-dir: ${{ vars.FTP_REMOTE_DIR || '/' }}
           dangerous-clean-slate: false
           exclude: |
             **/.git*

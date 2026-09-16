@@ -82,7 +82,7 @@ async function main() {
   const host = env.FTP_HOST;
   const user = env.FTP_USER;
   const password = env.FTP_PASSWORD;
-  const remoteDir = env.FTP_REMOTE_DIR || "/centeraero.com";
+  const remoteDir = env.FTP_REMOTE_DIR || "/";
   const secure = (env.FTP_SECURE ?? "true") !== "false";
   const siteUrl = env.SITE_URL || "https://www.centeraero.com/";
 
