@@ -1,26 +1,175 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand — graphite + emerald (Center Aero identity, palette "Zümrüt") */
+  --color-graphite-950: #0e141b;
+  --color-graphite-900: #151d26;
+  --color-graphite-800: #1f2a37;
+  --color-graphite-700: #2b3949;
+  --color-graphite-600: #3c4c5e;
+  --color-graphite-500: #5b6b7f;
+  --color-graphite-400: #8a97a8;
+  --color-graphite-300: #b7c0cc;
+  --color-graphite-200: #d9dee5;
+  --color-graphite-100: #eef1f5;
+  --color-graphite-50: #f6f8fa;
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --shadow-card: 0 1px 2px rgb(31 42 55 / 0.06), 0 8px 24px -12px rgb(31 42 55 / 0.18);
+  --shadow-console: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 30px 80px -30px rgb(0 0 0 / 0.7);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-white text-graphite-800 font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-emerald-200);
+    color: var(--color-graphite-900);
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-500);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-6 md:px-10;
+}
+
+@utility kicker {
+  @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-600;
+}
+
+@utility hairline {
+  @apply border-graphite-200;
+}
+
+/* Fine engineering grid — used on dark and light surfaces */
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+@utility grid-lines-light {
+  background-image:
+    linear-gradient(to right, rgb(31 42 55 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(31 42 55 / 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Blueprint grid: 8px minor + 72px major hairlines (dark surfaces). Keep grid-lines as is; new sections opt in. */
+@utility blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgb(255 255 255 / 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.02) 1px, transparent 1px);
+  background-size: 72px 72px, 72px 72px, 8px 8px, 8px 8px;
+}
+@utility blueprint-grid-light {
+  background-image:
+    linear-gradient(to right, rgb(31 42 55 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(31 42 55 / 0.06) 1px, transparent 1px),
+    linear-gradient(to right, rgb(31 42 55 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(31 42 55 / 0.025) 1px, transparent 1px);
+  background-size: 72px 72px, 72px 72px, 8px 8px, 8px 8px;
+}
+
+/* Runway centreline rule: real 30 m stripe / 20 m gap ratio. Section dividers on light surfaces. */
+@utility rule-centreline {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--color-graphite-300) 0 30px, transparent 30px 50px);
+}
+@utility rule-centreline-dark {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgb(255 255 255 / 0.18) 0 30px, transparent 30px 50px);
+}
+
+/* Threshold lights: a row of green lamps (threshold lights are green in reality). Footer top edge. */
+@utility threshold-lights {
+  height: 8px;
+  background: radial-gradient(circle, var(--color-emerald-400) 1.2px, transparent 1.9px) 0 50% / 40px 8px repeat-x;
+}
+
+/* Dimension / caption label */
+@utility dim-label {
+  @apply font-mono text-[10px] uppercase tracking-[0.12em] tabular-nums;
+}
+
+/* Small code tag (STN, ATA, cond, urgency). 3px radius on purpose: a tag, not a pill. */
+@utility code-tag {
+  @apply inline-flex items-center rounded-[3px] border px-1.5 py-0.5 font-mono text-[10px] uppercase leading-none tracking-[0.1em];
+}
+
+@keyframes ca-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ca-pulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes ca-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes ca-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.route-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ca-draw 2.6s var(--ease-out-expo) forwards;
+}
+.pulse-ring {
+  animation: ca-pulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.spin-slow {
+  animation: ca-spin 60s linear infinite;
+}
+.blink {
+  animation: ca-blink 1.6s ease-in-out infinite;
+}
+/* Contrail: a short dash travelling start→end along a pathLength=1 path. Reuses ca-draw (offset 1→0). Replaces the SMIL animateMotion dots in the hero. */
+.contrail {
+  stroke-dasharray: 0.05 0.95;
+  stroke-linecap: round;
+  animation: ca-draw var(--dur, 9s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-path { animation: none; stroke-dashoffset: 0; }
+  .pulse-ring, .spin-slow, .blink { animation: none; }
+  .contrail { animation: none; opacity: 0; }
+  html { scroll-behavior: auto; }
 }

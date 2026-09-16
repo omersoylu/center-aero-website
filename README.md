@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Center Aero — Web Sitesi
 
-## Getting Started
+Center Aero için tek sayfalık tanıtım sitesi. Next.js 16 (App Router), Tailwind CSS v4, `motion` (Framer Motion'ın devamı) ve `lucide-react` ile kuruldu. Bazı bileşen kalıpları 21st.dev'den uyarlandı (dosya başlarındaki notlara bakın).
 
-First, run the development server:
+## Çalıştırma
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # üretim derlemesi (statik)
+npm run start      # üretim sunucusu
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Yapı
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/app/layout.tsx` — fontlar (Manrope, JetBrains Mono), meta veriler, dil sağlayıcısı
+- `src/app/page.tsx` — bölümlerin sırası
+- `src/lib/content.ts` — **tüm metinler** (EN / TR). Kopyayı değiştirmek için yalnızca bu dosyayı düzenleyin.
+- `src/lib/i18n.tsx` — dil bağlamı; seçim `localStorage`'da saklanır (`center-aero-lang`)
+- `src/components/` — bölümler: `hero`, `matching-console`, `platform-marquee`, `claims`, `how-it-works`, `product-groups`, `aircraft-platforms`, `vision`, `audiences`, `contact`, `footer`, `nav`
+- `src/components/logo.tsx` — logo ve işaret, vektör yol olarak gömülü (font gerekmez)
+- `src/app/globals.css` — marka renkleri (grafit `#1F2A37`, zümrüt `#10B981`), yardımcı sınıflar, animasyon keyframe'leri
+- `public/` — logo SVG'leri ve favicon
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Yayına almadan önce
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **İletişim formu** (`src/components/contact.tsx`): şu an yalnızca istemci tarafında onay gösterir. Bir e-posta servisi veya API ucuna bağlanmalı (ör. Resend, Formspree, kendi API route'unuz).
+2. `src/app/layout.tsx` içindeki `metadata` alanına alan adı (`metadataBase`) ve Open Graph görseli ekleyin.
+3. Sosyal medya ve e-posta bağlantıları eklenecekse `footer.tsx` ve `contact.tsx` içinde yer ayrıldı.
+4. Vercel'e bağlanıp `main` dalını dağıtmak yeterlidir; ek yapılandırma gerekmez.
